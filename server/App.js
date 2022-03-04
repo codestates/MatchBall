@@ -9,7 +9,7 @@ console.log("hello");
 app.use(cors());
 
 app.use("/", (req, res) => {
-  res.send("Hello WaaT!");
+  res.send("Hello MatchBall!");
 });
 
 app.listen(PORT, () => {

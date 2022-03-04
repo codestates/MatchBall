@@ -1,8 +1,11 @@
 {
-  "dependencies": {
-    "express": "^4.17.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",    
-    "nodemon": "^2.0.15"
-  }
+    "scripts": {
+    "start": "node App.js"
+  },
+    "dependencies": {
+      "express": "^4.17.3",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.0",    
+      "nodemon": "^2.0.15"
+    }
 }
