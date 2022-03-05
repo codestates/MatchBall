@@ -1,15 +1,28 @@
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [str, setStr] = useState("aa");
+  const init = () => {
+    axios.get(`${process.env.REACT_APP_API_URL}/`).then((res) => {
+      setStr(res.data.data);
+    });
+  };
+
+  // useEffect(() => {
+  //   init();
+  // }, []);
+
   return (
     <div className="App">
-      hello world
-      {/* <header className="App-header">
+      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <button onClick={init}>button</button>
         </p>
+        <p>{str}</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -18,7 +31,7 @@ function App() {
         >
           Learn React
         </a>
-      </header> */}
+      </header>
     </div>
   );
 }
