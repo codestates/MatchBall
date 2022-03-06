@@ -23,7 +23,7 @@ connection.query('SELECT * FROM users',(error, rows ,fields) =>{
 })
 connection.end();
 
-console.log("hello");
+console.log("hello!");
 
 app.use(cors());
 
