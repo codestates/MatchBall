@@ -15,19 +15,20 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+let testDummyData
 connection.query('SELECT * FROM users',(error, rows ,fields) =>{
   if(error) throw error;
   console.log('User info is',rows);
+  testDummyData = rows;
 })
 connection.end();
-
 
 console.log("hello");
 
 app.use(cors());
 
 app.use("/", (req, res) => {
-  res.status(200).send({ data: "initial data" });
+  res.status(200).send({ data: testDummyData });
 });
 
 app.listen(PORT, () => {
