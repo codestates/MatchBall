@@ -1,8 +1,6 @@
-const Controller = require('../controllers/index')
-
 module.exports = {
     //===users
-    auth: require('./users/auth.js'),
+    auth: require('./users/auth'),
     signup: require('./users/signup'),
     signin: require('./users/signin'),
     signout: require('./users/signout'),
@@ -10,13 +8,13 @@ module.exports = {
     new: require('./matches/new'),
     edit: {
         patch: require('./matches/editp'),
-        get: require('./matches/editg'),
+        get: require('./matches/editg')
     },
-    get: require(Controller.get),
-    post: require(Controller.post),
     delete: require('./matches/delete'),
     cancel: require('./matches/cancel'),
-    main: require('./matches/main'),
+    list: require('./matches/list'),
+    matchget: require('./matches/matchget'),
+    matchpost: require('./matches/matchpost'),
     //===mypage
     matches: require('./mypage/matches'),
     orders: require('./mypage/orders'),
