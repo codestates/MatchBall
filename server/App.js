@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const PORT = 4000;
+const PORT = 80;
 
 
 const loginRouter = require("./routes/loginReg");
