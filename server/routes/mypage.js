@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Controller = require('../controllers/mypage')
+const Controller = require('../controllers')
 
 router.get('/matches', Controller.matches);
 router.get('/orders', Controller.orders);

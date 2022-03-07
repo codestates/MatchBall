@@ -1,3 +1,3 @@
 module.exports = (req, res) => {
-    res.send("users signout")
+    res.send("matches edit post")
 }
