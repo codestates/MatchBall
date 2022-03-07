@@ -1,3 +1,4 @@
 module.exports = (req, res) => {
-    res.send("users signout")
+    res.clearCookie('accessToken')
+    res.status(200).send("ok")
 }
