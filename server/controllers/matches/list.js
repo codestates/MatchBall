@@ -1,11 +1,11 @@
 const mysql = require('mysql')
 // const app = express();
 const connection = mysql.createConnection({
-    host : 'matchball-database.cswrwl4zmldq.ap-northeast-2.rds.amazonaws.com',
-    user: 'admin',
-    password : 'matchballdatabase',
-    database : 'test',
-    port : '13306'
+    host : process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password : process.env.DATABASE_PASSWORD,
+    database : process.env.DATABASE_DATABASE,
+    port : process.env.DATABASE_PORT
   });
   
   connection.connect();
@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
   let testDummyData
   connection.query('SELECT * FROM matches',(error, rows ,fields) =>{
     if(error) throw error;
-    console.log('Match info is!!',rows);
+    // console.log('Match info is!!',rows);
     testDummyData = rows;
   })
   connection.end();
