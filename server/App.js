@@ -47,9 +47,9 @@ app.use('/mypage', mypageRouter);
 
 
 
-app.use("/", (req, res) => {
-  res.status(200).send({ data: testDummyData });
-});
+// app.use("/", (req, res) => {
+//   res.status(200).send({ data: testDummyData });
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}...`);
