@@ -1,38 +1,37 @@
-import logo from "./logo.svg";
 import "./App.css";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
+import Matches from "./pages/Matches";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
-  const [str, setStr] = useState("aa");
-  const init = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/`).then((res) => {
-      setStr(res.data.data);
-    });
-  };
-
-  // useEffect(() => {
-  //   init();
-  // }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <button onClick={init}>button</button>
-        </p>
-        <p>{str}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Nav />
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="/signin">
+          <LoginPage />
+        </Route>
+        <Route path="/signup">
+          <SignUpPage />
+        </Route>
+        {/* <Route path="/mypage">
+          <MyPage />
+        </Route> */}
+        <Route path="/matches">
+          <Matches />
+        </Route>
+      </Switch>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
