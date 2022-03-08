@@ -24,28 +24,7 @@ const WriteButton = styled.button`
   justify-content: flex-end;
 `;
 
-function Matches() {
-  const [data, setData] = useState([
-    {
-      matchdate: 202203071600,
-      region: "서울",
-      sitename: "효창공원",
-      level: "초보",
-      team: "한화",
-      nickname: "ABC",
-      recruit: "모집중",
-    },
-    {
-      matchdate: 202203071800,
-      region: "경기",
-      sitename: "일산공원",
-      level: "중수",
-      team: "두산",
-      nickname: "DEF",
-      recruit: "모집중",
-    },
-  ]);
-
+function Matches({ data }) {
   return (
     <>
       <Nav />
@@ -65,7 +44,7 @@ function Matches() {
         </MatchesFilter>
         <div className="entire-matches">
           {data.map((match) => {
-            return <MatchInfo match={match} />;
+            return <MatchInfo key={match.id} match={match} />;
           })}
         </div>
       </MatchesBody>
