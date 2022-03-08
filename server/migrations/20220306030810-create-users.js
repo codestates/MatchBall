@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       mobile: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       nickname: {
         type: Sequelize.STRING
