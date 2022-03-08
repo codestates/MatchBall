@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       region_Detail: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       sitename: {
         type: Sequelize.STRING

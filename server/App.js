@@ -11,6 +11,9 @@ const loginRouter = require("./routes/loginReg");
 const matchRouter = require("./routes/matches");
 const mypageRouter = require("./routes/mypage");
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // const connection = mysql.createConnection({
 //   host : 'matchball-database.cswrwl4zmldq.ap-northeast-2.rds.amazonaws.com',
 //   user: 'admin',
@@ -34,12 +37,13 @@ console.log("hello!");
 app.use(
   cors({
     // origin: ["http://localhost:3000"],
-    // credentials: true,
-    // methods: ["GET", "POST", "PATCH", "DELETE"]
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE"]
   })
 );
 
 app.use(cookieParser());
+// app.uns()
 
 app.use('/users', loginRouter);
 app.use('/matches', matchRouter);
