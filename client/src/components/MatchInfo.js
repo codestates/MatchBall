@@ -21,6 +21,7 @@ const MatchInfoText = styled.div`
 `;
 
 export default function MatchInfo({ match }) {
+  let recruit = match.is_matched === 0 ? "모집중" : "모집완료";
   return (
     <MatchInfoBody>
       {/* <div className="MatchInfo-time">{match.matchdate}</div>
@@ -43,7 +44,7 @@ export default function MatchInfo({ match }) {
         </DL>
         <HR />
       </MatchInfoText>
-      <button>{match.recruit}</button>
+      <button>{recruit}</button>
     </MatchInfoBody>
   );
 }

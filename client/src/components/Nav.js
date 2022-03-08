@@ -5,9 +5,9 @@ import { MdAccountCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Header = styled.header`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   /* box-shadow: X Y BLUR SPREAD COLOR; */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   background: #fff;
 `;
 
@@ -67,18 +67,14 @@ function Nav() {
       <Inner>
         <MenuGroup>
           <Logo>
-            <Link to="/">
-              <LogoImg href="#">MatchBall</LogoImg>
-            </Link>
+            <LogoImg href="/">MatchBall</LogoImg>
           </Logo>
         </MenuGroup>
         <SignGroup>
           <UserName>권순일님</UserName>
-          <Link to="/mypage">
-            <User href="#">
-              <MdAccountCircle size={50} color="#190707" />
-            </User>
-          </Link>
+          <User href="/mypage">
+            <MdAccountCircle size={50} color="#190707" />
+          </User>
         </SignGroup>
       </Inner>
     </Header>

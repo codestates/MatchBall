@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const Bottom = styled.footer`
-  background: #eee;
   position: relative;
-  transform: translateY(-100%);
-  padding: 15px 0;
-  border-top: 1px solid black;
-  display: flex;
+  background: #ffffff;
+`;
+
+const Inner = styled.div`
+  padding: 50px 0;
+  border-top: 1px solid #eee;
 `;
 
 const Text = styled.div`
@@ -21,7 +22,9 @@ const Text = styled.div`
 function Footer(props) {
   return (
     <Bottom>
-      <Text>2022 MatchBall</Text>
+      <Inner>
+        <Text>2022 MatchBall</Text>
+      </Inner>
     </Bottom>
   );
 }
