@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   matches.init({
     message: DataTypes.STRING,
     region: DataTypes.STRING,
-    region_Detail: DataTypes.INTEGER,
+    region_Detail: DataTypes.STRING,
     sitename: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
     matchdate: DataTypes.DATE,

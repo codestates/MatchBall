@@ -2,6 +2,7 @@ const { users } = require('../../models')
 const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = (req, res) => {
+    console.log(req)
     const accessToken = isAuthorized(req)
 
     if (!accessToken) {
