@@ -1,8 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
+import axios from "axios";
 
 const Subject = styled.div`
   position: absolute;
@@ -83,7 +84,57 @@ const JoinBtn = styled.button`
   }
 `;
 
-function LoginPage({ title }) {
+function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleInputValue = (key) => (e) => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+  };
+
+  const handleLogin = () => {
+    const { email, password } = loginInfo;
+    if (!email || !password) {
+      setErrorMessage("이메일과 비밀번호를 입력하세요");
+    } else {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/users/signin`, {
+          email,
+          password,
+        })
+        .then((res) => {
+          if (res.data.message !== "ok") {
+            setErrorMessage("계정 정보가 일치하지 않습니다.");
+            return false;
+          } else {
+            setUserAccessToken(res.data.data.accessToken);
+
+            axios
+              .post(`${process.env.REACT_APP_API_URL}/users/auth`, {
+                cookies: { accessToken: res.data.data.accessToken },
+              })
+              .then((res) => {
+                if (res.data.message !== "ok") {
+                  setErrorMessage(
+                    "access token이 만료되어 불러올 수 없습니다."
+                  );
+                  return false;
+                } else {
+                  // res.data.data = 유저 정보
+                }
+              });
+          }
+          setErrorMessage("");
+          handleResponseSuccess();
+          return true;
+        });
+    }
+  };
+
   return (
     <>
       <Nav />
@@ -98,6 +149,7 @@ function LoginPage({ title }) {
             maxlength="30"
             class="int"
             placeholder="이메일"
+            onChange={handleInputValue("email")}
           ></Box>
           <Title>비밀번호</Title>
           <Box
@@ -107,13 +159,22 @@ function LoginPage({ title }) {
             maxlength="20"
             class="int"
             placeholder="비밀번호"
+            onChange={handleInputValue("password")}
           ></Box>
+
+          <div className="alert-box">{errorMessage}</div>
+
           <Link to="/matches">
-            <LoginBtn>SIGIN IN</LoginBtn>
+            <LoginBtn onClick={handleLogin}>SIGN IN</LoginBtn>
           </Link>
-          <Link to="/signup">
-            <JoinBtn>JOIN</JoinBtn>
-          </Link>
+
+          {handleLogin ? (
+            <Link to="/signup">
+              <JoinBtn>JOIN</JoinBtn>
+            </Link>
+          ) : (
+            <Redirect to="/signin" />
+          )}
         </RowGroup>
       </TodoTemplateBlock>
       <Footer />
