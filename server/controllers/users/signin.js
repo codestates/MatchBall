@@ -2,11 +2,11 @@ const { users } = require('../../models')
 const { generateAccessToken, sendAccessToken } = require('../tokenFunctions')
 
 module.exports = (req, res) => {
+    console.log(req.body)
     const { email, password } = req.body
-
     users.findOne({
         where: {
-            email,
+            email: email,
             pw: password
         }
     })
@@ -24,7 +24,7 @@ module.exports = (req, res) => {
             sendAccessToken(res, accessToken);
         })
         .catch((err) => {
-            res.staus(500).send({
+            res.status(500).send({
                 "code": 500,
                 "error": "server error"
             })
