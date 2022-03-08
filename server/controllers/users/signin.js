@@ -2,7 +2,6 @@ const { users } = require('../../models')
 const { generateAccessToken, sendAccessToken } = require('../tokenFunctions')
 
 module.exports = (req, res) => {
-    console.log(req.body)
     const { email, password } = req.body
     users.findOne({
         where: {
@@ -17,7 +16,7 @@ module.exports = (req, res) => {
             delete data.dataValues.pw
 
             const accessToken = generateAccessToken(data.dataValues)
-
+            console.log(accessToken)
             res.cookie("accessToken", accessToken, {
                 httpOnly: true,
             })
