@@ -8,29 +8,36 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import ResisterForm from "./components/RegisterForm";
+import UserInfoEditPage from "./pages/UserInfoEditPage";
+import MyPage from "./pages/MyPage";
+import RegisterPage from "./pages/RegisterPage";
+import RegisterEdigPage from "./pages/RegisterEdigPage";
+import Contents from "./components/Contents";
 
 function App() {
   return (
     <BrowserRouter>
-      <Nav />
       <Switch>
         <Route exact path="/">
           <LandingPage />
         </Route>
         <Route path="/signin">
-          <LoginPage />
+          <LoginPage title="로그인" />
         </Route>
         <Route path="/signup">
           <SignUpPage />
         </Route>
-        {/* <Route path="/mypage">
+        <Route path="/mypage">
           <MyPage />
-        </Route> */}
+        </Route>
+        <Route path="/matches/new">
+          <RegisterPage />
+        </Route>
         <Route path="/matches">
           <Matches />
         </Route>
       </Switch>
-      <Footer />
     </BrowserRouter>
   );
 }

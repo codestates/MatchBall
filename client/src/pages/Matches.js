@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import MatchInfo from "../components/MatchInfo";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const MatchesBody = styled.div`
   font-size: 22px;
@@ -45,26 +47,30 @@ function Matches() {
   ]);
 
   return (
-    <MatchesBody>
-      <center>
-        <span>매칭 공고</span>
-      </center>
-      <MatchesFilter>
-        <MatchesFilterLeft>
-          <button className="matches-filter-matchdate">날짜별</button>
-          <button className="matches-filter-region">지역별</button>
-          <button className="matches-filter-level">실력별</button>
-        </MatchesFilterLeft>
-        <Link to="/matches/new">
-          <WriteButton>글쓰기</WriteButton>
-        </Link>
-      </MatchesFilter>
-      <div className="entire-matches">
-        {data.map((match) => {
-          return <MatchInfo match={match} />;
-        })}
-      </div>
-    </MatchesBody>
+    <>
+      <Nav />
+      <MatchesBody>
+        <center>
+          <span>매칭 공고</span>
+        </center>
+        <MatchesFilter>
+          <MatchesFilterLeft>
+            <button className="matches-filter-matchdate">날짜별</button>
+            <button className="matches-filter-region">지역별</button>
+            <button className="matches-filter-level">실력별</button>
+          </MatchesFilterLeft>
+          <Link to="/matches/new">
+            <WriteButton>글쓰기</WriteButton>
+          </Link>
+        </MatchesFilter>
+        <div className="entire-matches">
+          {data.map((match) => {
+            return <MatchInfo match={match} />;
+          })}
+        </div>
+      </MatchesBody>
+      <Footer />
+    </>
   );
 }
 

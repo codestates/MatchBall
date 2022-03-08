@@ -3,14 +3,18 @@ import Footer from "../components/Footer";
 import Nav from "../components/Nav";
 import UserEditForm from "../components/UserEditForm";
 
-function SignUpPage(props) {
+function UserInfoEditPage() {
   return (
     <>
       <Nav />
-      <UserEditForm title="회원가입" click="회원가입" />
+      <UserEditForm
+        title="회원 정보 수정"
+        click="회원정보수정"
+        disabled="true"
+      />
       <Footer />
     </>
   );
 }
 
-export default SignUpPage;
+export default UserInfoEditPage;
