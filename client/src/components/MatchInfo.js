@@ -90,128 +90,33 @@ const Span = styled.span`
 `;
 
 export default function MatchInfo({ match }) {
-  // let recruit = match.is_matched === 0 ? "모집중" : "모집완료";
+  let recruit = match.is_matched === false ? "모집중" : "모집완료";
   return (
     <Section>
-      {/* <div className="MatchInfo-time">{match.matchdate}</div>
-      <div className="MatchInfo-region">{match.region}</div>
-      <div className="MatchInfo-sitename">{match.sitename}</div>
-      <div className="MatchInfo-level">{match.level}</div>
-      <div className="MatchInfo-teamlogo">{match.team}</div>
-      <div className="MatchInfo-nickname">{match.nickname}</div>
-      <div className="MatchInfo-recruit">{match.recruit}</div> */}
       <GlobalStyle />
       <Inner>
         <MatchesBlock>
           <Box>
-            <Region>용산</Region>
+            <Region>{match.region}</Region>
             <FlexBox>
               <Block>
-                <Span>22.03.08</Span>
-                <Span>13:30</Span>
+                <Span>{match.matchdate}</Span>
+                <Span>{match.matchdate}</Span>
               </Block>
               <Block>
-                <Span>용산공원</Span>
-                <Span>초급자</Span>
+                <Span>{match.sitename}</Span>
+                <Span>{match.level}</Span>
               </Block>
               <Block>
-                <Span>KIA 타이거즈</Span>
+                <Span>{match.team}</Span>
               </Block>
               <RiBlock>
-                <Span>모집중</Span>
-              </RiBlock>
-            </FlexBox>
-          </Box>
-          <Box>
-            <Region>용산</Region>
-            <FlexBox>
-              <Block>
-                <Span>22.03.08</Span>
-                <Span>13:30</Span>
-              </Block>
-              <Block>
-                <Span>용산공원</Span>
-                <Span>초급자</Span>
-              </Block>
-              <Block>
-                <Span>KIA 타이거즈</Span>
-              </Block>
-              <RiBlock>
-                <Span>모집중</Span>
-              </RiBlock>
-            </FlexBox>
-          </Box>
-          <Box>
-            <Region>용산</Region>
-            <FlexBox>
-              <Block>
-                <Span>22.03.08</Span>
-                <Span>13:30</Span>
-              </Block>
-              <Block>
-                <Span>용산공원</Span>
-                <Span>초급자</Span>
-              </Block>
-              <Block>
-                <Span>KIA 타이거즈</Span>
-              </Block>
-              <RiBlock>
-                <Span>모집중</Span>
-              </RiBlock>
-            </FlexBox>
-          </Box>
-          <Box>
-            <Region>용산</Region>
-            <FlexBox>
-              <Block>
-                <Span>22.03.08</Span>
-                <Span>13:30</Span>
-              </Block>
-              <Block>
-                <Span>용산공원</Span>
-                <Span>초급자</Span>
-              </Block>
-              <Block>
-                <Span>KIA 타이거즈</Span>
-              </Block>
-              <RiBlock>
-                <Span>모집중</Span>
-              </RiBlock>
-            </FlexBox>
-          </Box>
-          <Box>
-            <Region>용산</Region>
-            <FlexBox>
-              <Block>
-                <Span>22.03.08</Span>
-                <Span>13:30</Span>
-              </Block>
-              <Block>
-                <Span>용산공원</Span>
-                <Span>초급자</Span>
-              </Block>
-              <Block>
-                <Span>KIA 타이거즈</Span>
-              </Block>
-              <RiBlock>
-                <Span>모집중</Span>
+                <Span>{recruit}</Span>
               </RiBlock>
             </FlexBox>
           </Box>
         </MatchesBlock>
-        {/* <div>{match.matchdate}</div>
-        <DL>
-          <DT>{match.region}</DT>
-          <DT>{match.sitename}</DT>
-          <DT>{match.level}</DT>
-        </DL>
-        <DL>
-          <DT>{match.team}</DT>
-          <DT>{match.nickname}</DT>
-        </DL>
-        <HR /> */}
       </Inner>
-      {/* <button>{recruit}</button> */}
     </Section>
   );
 }
