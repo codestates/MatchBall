@@ -6,29 +6,30 @@ import MatchInfo from "../components/MatchInfo";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
-const MatchesBody = styled.div`
-  font-size: 22px;
-  margin: 20px 100px;
-`;
+// const MatchesBody = styled.div`
+//   font-size: 22px;
+//   margin: 20px 100px;
+// `;
 
-const MatchesFilter = styled.div`
-  display: flex;
-  margin: 10px;
-`;
+// const MatchesFilter = styled.div`
+//   display: flex;
+//   margin: 10px;
+// `;
 
-const MatchesFilterLeft = styled.div`
-  flex-grow: 1;
-`;
+// const MatchesFilterLeft = styled.div`
+//   flex-grow: 1;
+// `;
 
-const WriteButton = styled.button`
-  justify-content: flex-end;
-`;
+// const WriteButton = styled.button`
+//   justify-content: flex-end;
+// `;
 
 function Matches({ data }) {
   return (
     <>
       <Nav />
-      <MatchesBody>
+      {/* <MatchInfo></MatchInfo> */}
+      {/* <MatchesBody>
         <center>
           <span>매칭 공고</span>
         </center>
@@ -47,7 +48,8 @@ function Matches({ data }) {
             return <MatchInfo key={match.id} match={match} />;
           })}
         </div>
-      </MatchesBody>
+      </MatchesBody> */}
+      <MatchInfo />
       <Footer />
     </>
   );
