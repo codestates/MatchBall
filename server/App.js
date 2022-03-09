@@ -15,25 +15,8 @@ const mypageRouter = require("./routes/mypage");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// const connection = mysql.createConnection({
-//   host : 'matchball-database.cswrwl4zmldq.ap-northeast-2.rds.amazonaws.com',
-//   user: 'admin',
-//   password : 'matchballdatabase',
-//   database : 'test',
-//   port : '13306'
-// });
-
-// connection.connect();
-
-// let testDummyData
-// connection.query('SELECT * FROM users',(error, rows ,fields) =>{
-//   if(error) throw error;
-//   console.log('User info is',rows);
-//   testDummyData = rows;
-// })
-// connection.end();
-
 console.log("hello!");
+
 
 app.use(
   cors({

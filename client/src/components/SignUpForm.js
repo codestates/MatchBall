@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import { useState } from "react";
+import { MdFormatListBulleted } from "react-icons/md";
+import axios from "axios";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -59,6 +62,7 @@ const Box = styled.input`
   padding: 10px 110px 10px 14px;
   box-sizing: border-box;
 `;
+
 const Select = styled.select`
   display: block;
   position: relative;
@@ -84,7 +88,84 @@ const ClickBtn = styled.button`
   text-align: center;
 `;
 
-function SignInfo({ title }) {
+function SignUpForm({ title }) {
+  const [signInfo, setSignInfo] = useState({
+    email: "",
+    password: "",
+    nickname: "",
+    mobile: "",
+    level: "",
+    team: "",
+  });
+
+  const [emailCheckText, setEmailCheckText] = useState("");
+  const [pwdCheckText, setPwdCheckText] = useState("");
+  const [pwdCheckConfirmText, setPwdCheckConfirmText] = useState("");
+
+  const post_ok = () => {
+    if (
+      !signInfo.email ||
+      !signInfo.password ||
+      !signInfo.nickname ||
+      !signInfo.mobile ||
+      !signInfo.level ||
+      !signInfo.team
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const handleInputValue = (key) => (e) => {
+    setSignInfo({ ...signInfo, [key]: e.target.value });
+  };
+
+  const checkEmail = (e) => {
+    let email = e.target.value;
+    let expect_email = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+    if (expect_email.test(email) === false) {
+      setEmailCheckText("이메일 형식이 올바르지 않습니다.");
+      return false;
+    }
+    setEmailCheckText("올바른 형식입니다.");
+    setSignInfo({ ...signInfo, email: e.target.value });
+  };
+
+  const checkPassword = (e) => {
+    let pwd = e.target.value;
+
+    if (pwd.length < 8 || pwd.length > 12) {
+      setPwdCheckText("비밀번호를 8~12자 사이로 입력하세요.");
+      return false;
+    } else {
+      setPwdCheckText("사용이 가능합니다.");
+    }
+    setSignInfo({ ...signInfo, password: pwd });
+  };
+
+  const isSamePwd = (e) => {
+    if (signInfo.password !== "") {
+      if (signInfo.password !== e.target.value) {
+        setPwdCheckConfirmText("비밀번호가 서로 일치하지 않습니다.");
+        return false;
+      }
+      setPwdCheckConfirmText("서로 일치합니다.");
+    }
+  };
+
+  const signInfoPost = () => {
+    // axios
+    //   .post(`${process.env.REACT_APP_API_URL}/users/signup`, signInfo)
+    //   .then((res) => {
+    //   });
+    console.log("hello");
+  };
+
+  const warning = () => {
+    alert("입력 정보를 다시 확인하세요.");
+  };
+
   return (
     <>
       <GlobalStyle></GlobalStyle>
@@ -99,7 +180,9 @@ function SignInfo({ title }) {
             maxlength="30"
             class="int"
             placeholder="이메일"
+            onChange={checkEmail}
           ></Box>
+          <div>{emailCheckText}</div>
           <Title>비밀번호</Title>
           <Box
             type="password"
@@ -108,16 +191,20 @@ function SignInfo({ title }) {
             maxlength="20"
             class="int"
             placeholder="비밀번호"
+            onChange={checkPassword}
           ></Box>
+          <div>{pwdCheckText}</div>
           <Title>비밀번호 확인</Title>
           <Box
             type="password"
-            id="password"
-            title="password"
+            id="password_confirm"
+            title="password_confirm"
             maxlength="20"
             class="int"
-            placeholder="비밀번호확인"
+            placeholder="비밀번호 확인"
+            onChange={isSamePwd}
           ></Box>
+          <div>{pwdCheckConfirmText}</div>
           <Title>닉네임</Title>
           <Box
             type="text"
@@ -126,6 +213,7 @@ function SignInfo({ title }) {
             maxlength="10"
             class="int"
             placeholder="닉네임"
+            onChange={handleInputValue("nickname")}
           ></Box>
           <Title>mobile</Title>
           <Box
@@ -135,11 +223,12 @@ function SignInfo({ title }) {
             maxlength="10"
             class="int"
             placeholder="전화번호"
+            onChange={handleInputValue("mobile")}
           ></Box>
           <Title>본인실력</Title>
-          <Select>
+          <Select onChange={handleInputValue("level")}>
             <OptGroup label="실력정도">
-              <Opt selected="true">---선택하세요---</Opt>
+              <Opt defaultValue="---선택하세요---">---선택하세요---</Opt>
               <Opt>고급자</Opt>
               <Opt>중급자</Opt>
               <Opt>초급자</Opt>
@@ -147,9 +236,9 @@ function SignInfo({ title }) {
             </OptGroup>
           </Select>
           <Title>좋아하는 팀</Title>
-          <Select>
+          <Select onChange={handleInputValue("team")}>
             <OptGroup label="프로야구 팀">
-              <Opt selected="true">없음</Opt>
+              <Opt defaultValue="없음"></Opt>
               <Opt>KIA 타이거즈</Opt>
               <Opt>두산 베어스</Opt>
               <Opt>롯데 자이언츠</Opt>
@@ -162,13 +251,18 @@ function SignInfo({ title }) {
               <Opt>한화 이글스</Opt>
             </OptGroup>
           </Select>
-          <Link to="/signin">
-            <ClickBtn>회원가입</ClickBtn>
-          </Link>
+
+          {post_ok() ? (
+            <Link to="/signin">
+              (<ClickBtn onClick={signInfoPost}>회원가입</ClickBtn>)
+            </Link>
+          ) : (
+            <ClickBtn onClick={warning}>회원가입</ClickBtn>
+          )}
         </RowGroup>
       </TodoTemplateBlock>
     </>
   );
 }
 
-export default SignInfo;
+export default SignUpForm;

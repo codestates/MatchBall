@@ -1,8 +1,16 @@
 import React from "react";
-import SignInfo from "../components/SignInfo";
+import Footer from "../components/Footer";
+import Nav from "../components/Nav";
+import SignUpForm from "../components/SignUpForm";
 
 function SignUpPage(props) {
-  return <SignInfo title="회원가입" />;
+  return (
+    <>
+      <Nav />
+      <SignUpForm title="회원가입" />
+      <Footer />
+    </>
+  );
 }
 
 export default SignUpPage;

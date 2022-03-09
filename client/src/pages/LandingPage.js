@@ -4,7 +4,7 @@ import imgA from "../img/baseball.jpeg";
 import { Link } from "react-router-dom";
 
 const Visul = styled.section`
-  height: 100vh;
+  height: 80vh;
   background-image: url(${imgA});
   background-repeat: no-repeat;
   background-position: center;
@@ -17,7 +17,10 @@ const Visul = styled.section`
     bottom: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.3);
+    height: 80vh;
+    margin-top: 10vh;
   }
+  margin-top: 10vh;
 `;
 
 const Inner = styled.div`
@@ -56,7 +59,7 @@ function LandingPage() {
     <div>
       <Visul>
         <Inner>
-          <SummaryTitle>나랑 같이 캐치볼 할래?</SummaryTitle>
+          <SummaryTitle>나랑 캐치볼 할래?</SummaryTitle>
           <Link to="/signin">
             <Button>시작하기</Button>
           </Link>
