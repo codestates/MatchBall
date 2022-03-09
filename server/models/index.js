@@ -34,4 +34,33 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.log('Unable to connect to the database: ', err);
+    });
+    
+db.users = require('./users')(sequelize, Sequelize);
+db.matches = require('./matches')(sequelize, Sequelize);
+
+db.users.hasMany(db.matches, {
+  foreignKey: 'user_id',
+  sourceKey: 'id'
+});
+db.matches.belongsTo(db.users, {
+  foreignKey: 'user_id',
+  targetKey: 'id'
+});
+
+db.users.belongsToMany(db.matches, {
+  through: 'participant',
+  foreignKey: 'order_user_id'
+});
+db.matches.belongsToMany(db.users, {
+  through: 'participant',
+  foreignKey: 'matche_id',
+});
 module.exports = db;
