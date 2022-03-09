@@ -20,9 +20,6 @@ module.exports = {
       sitename: {
         type: Sequelize.STRING
       },
-      user_id: {
-        type: Sequelize.INTEGER
-      },
       matchdate: {
         type: Sequelize.DATE
       },

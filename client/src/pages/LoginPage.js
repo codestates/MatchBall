@@ -114,9 +114,10 @@ function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
             setUserAccessToken(res.data.data.accessToken);
 
             axios
-              .post(`${process.env.REACT_APP_API_URL}/users/auth`, {
-                cookies: { accessToken: res.data.data.accessToken },
-              })
+            .post(`${process.env.REACT_APP_API_URL}/users/auth`,
+              { accessToken: res.data.data.accessToken },
+              { withCredentials: true }
+            )
               .then((res) => {
                 if (res.data.message !== "ok") {
                   setErrorMessage(
@@ -124,7 +125,7 @@ function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
                   );
                   return false;
                 } else {
-                  // res.data.data = 유저 정보
+                  console.log(res.data.data.userInfo)
                 }
               });
           }
