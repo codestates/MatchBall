@@ -2,10 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const mysql = require('mysql');
 const app = express();
+const sequelize = require('./models').sequelize
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const PORT = 80;
-
+const PORT = process.env.SERVER_PORT;
+sequelize.sync();
 
 const loginRouter = require("./routes/loginReg");
 const matchRouter = require("./routes/matches");
@@ -36,7 +37,7 @@ console.log("hello!");
 
 app.use(
   cors({
-    // origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000"],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE"]
   })
