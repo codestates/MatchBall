@@ -133,7 +133,7 @@ function LoginPage({
                   );
                   return false;
                 } else {
-                  setUserInfo(res.data.data.userInfo);
+                  setUserInfo(res.data.data.userInfo); 
                 }
               });
           }
