@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const GlobalStyle = createGlobalStyle`
@@ -11,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 const Section = styled.section`
   position: relative;
   /* background: red; */
-  /* min-height: 100%; */
+  min-height: 100%;
 `;
 
 const Inner = styled.div`
@@ -148,38 +149,24 @@ const DelBtn = styled.button`
   }
 `;
 
-function RegisterForm({ title, click, userInfo, isAuthenticated }) {
-  const [createMatchInfo, setCreateMatchInfo] = useState({
-    region: "",
-    region_Detail: "",
-    sitename: "",
-    matchdate: "",
-    message: "",
-    is_matched: "false",
-    email: userInfo.email,
-    user_id: userInfo.id,
-  });
-
-  const handleInputValue = (key) => (e) => {
-    setCreateMatchInfo({ ...createMatchInfo, [key]: e.target.value });
-  };
-
-  const RegisterPost = () => {
-    console.log(createMatchInfo);
+function WritingDetailInfo({ detailText, userInfo, isAuthenticated }) {
+  // TODO: Date, time을 합쳐서 matchdate로 만들어야 함
+  const handleClick = () => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/matches/new`, createMatchInfo)
+      .post(`${process.env.REACT_APP_API_URL}/matches/${detailText.id}`, {
+        id: userInfo.id,
+      })
       .then((res) => {
-        alert(JSON.stringify(res.data.message));
+        alert(res.data);
         isAuthenticated();
       });
   };
 
-  // TODO: Date, time을 합쳐서 matchdate로 만들어야 함
   return (
     <Section>
       <Inner>
         <GlobalStyle></GlobalStyle>
-        <Subject>{title}</Subject>
+        <Subject>상세내역</Subject>
         <RegisterFormBlock>
           <RowGroup>
             <Title>닉네임</Title>
@@ -189,64 +176,72 @@ function RegisterForm({ title, click, userInfo, isAuthenticated }) {
               title="nickname"
               maxlength="10"
               class="int"
-              value={userInfo.nickname}
+              value={detailText.user.nickname}
               disabled
             ></Box>
             <Title>일정</Title>
-            <Box
-              type="datetime-local"
-              onChange={handleInputValue("matchdate")}
-            ></Box>
+            <SimilarFunction>
+              <Box
+                type="date"
+                name="startday"
+                value={detailText.matchdate.slice(0, 10)}
+                disabled
+              ></Box>
+              <Box
+                type="time"
+                name="birthtime"
+                value={detailText.matchdate.slice(11, 16)}
+                disabled
+              ></Box>
+            </SimilarFunction>
 
             <SimilarFunction>
               <TitleAndBox>
                 <Title>지역</Title>
-                <Box
-                  type="text"
-                  onChange={handleInputValue("region")}
-                  placeholder="ex: 서울, 경기"
-                ></Box>
+                <Box type="text" value={detailText.region} disabled></Box>
               </TitleAndBox>
               <TitleAndBox>
                 <Title>상세주소</Title>
                 <Box
                   type="text"
-                  onChange={handleInputValue("region_Detail")}
-                  placeholder="ex: OO구 OO동"
+                  value={detailText.region_Detail}
+                  disabled
                 ></Box>
               </TitleAndBox>
             </SimilarFunction>
-            <Title>장소명</Title>
-            <Box
-              type="text"
-              onChange={handleInputValue("sitename")}
-              placeholder="ex: OO운동장, OO공원"
-            ></Box>
-
+            <Title>장소</Title>
+            <Box type="text" value={detailText.sitename} disabled></Box>
             <SimilarFunction>
               <TitleAndBox>
                 <Title>실력</Title>
                 <Box
                   type="text"
                   id="level"
-                  value={userInfo.level}
+                  value={detailText.user.level}
                   disabled
                 ></Box>
               </TitleAndBox>
               <TitleAndBox>
                 <Title>좋아하는 팀</Title>
-                <Box type="text" id="Team" value={userInfo.team} disabled></Box>
+                <Box
+                  type="text"
+                  id="Team"
+                  value={detailText.user.team}
+                  disabled
+                ></Box>
               </TitleAndBox>
             </SimilarFunction>
             <Title>내용</Title>
             <TextMessage
               autoCapitalize="false"
-              placeholder="글 내용을 입력해주세요(인사, 준비물 등)"
-              onChange={handleInputValue("message")}
+              value={detailText.message}
+              disabled
             ></TextMessage>
             <BtnBlock>
-              <ClickBtn onClick={RegisterPost}>{click}</ClickBtn>
-              <DelBtn>취소</DelBtn>
+              <ClickBtn onClick={handleClick}>신청하기</ClickBtn>
+              <Link to="/matches">
+                <DelBtn>닫기</DelBtn>
+              </Link>
             </BtnBlock>
           </RowGroup>
         </RegisterFormBlock>
@@ -255,4 +250,4 @@ function RegisterForm({ title, click, userInfo, isAuthenticated }) {
   );
 }
 
-export default RegisterForm;
+export default WritingDetailInfo;

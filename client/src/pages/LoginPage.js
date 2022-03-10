@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Footer from "../components/Footer";
-import Nav from "../components/Nav";
 import axios from "axios";
 
 const Subject = styled.div`
@@ -17,7 +15,7 @@ const Subject = styled.div`
 
 const TodoTemplateBlock = styled.div`
   width: 512px;
-  height: 368px;
+  height: 712px;
 
   position: relative; /* 추후 박스 하단에 추가 버튼을 위치시키기 위한 설정 */
   background: white;
@@ -84,7 +82,12 @@ const JoinBtn = styled.button`
   }
 `;
 
-function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
+function LoginPage({
+  title,
+  handleResponseSuccess,
+  setUserAccessToken,
+  setUserInfo,
+}) {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -111,13 +114,18 @@ function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
             setErrorMessage("계정 정보가 일치하지 않습니다.");
             return false;
           } else {
-            setUserAccessToken(res.data.data.accessToken);
-
+            // setUserAccessToken(res.data.data.accessToken);
+            localStorage.setItem("accessToken", res.data.data.accessToken);
             axios
-            .post(`${process.env.REACT_APP_API_URL}/users/auth`,
-              { accessToken: res.data.data.accessToken },
-              { withCredentials: true }
-            )
+              .post(
+                `${process.env.REACT_APP_API_URL}/users/auth`,
+                {
+                  accessToken: res.data.data.accessToken,
+                },
+                {
+                  withCredentials: true,
+                }
+              )
               .then((res) => {
                 if (res.data.message !== "ok") {
                   setErrorMessage(
@@ -125,20 +133,18 @@ function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
                   );
                   return false;
                 } else {
-                  console.log(res.data.data.userInfo)
+                  setUserInfo(res.data.data.userInfo); 
                 }
               });
           }
           setErrorMessage("");
           handleResponseSuccess();
-          return true;
         });
     }
   };
 
   return (
     <>
-      <Nav />
       <Subject>{title}</Subject>
       <TodoTemplateBlock>
         <RowGroup>
@@ -165,20 +171,13 @@ function LoginPage({ title, handleResponseSuccess, setUserAccessToken }) {
 
           <div className="alert-box">{errorMessage}</div>
 
-          <Link to="/matches">
-            <LoginBtn onClick={handleLogin}>SIGN IN</LoginBtn>
-          </Link>
+          <LoginBtn onClick={handleLogin}>SIGN IN</LoginBtn>
 
-          {handleLogin ? (
-            <Link to="/signup">
-              <JoinBtn>JOIN</JoinBtn>
-            </Link>
-          ) : (
-            <Redirect to="/signin" />
-          )}
+          <Link to="/signup">
+            <JoinBtn>JOIN</JoinBtn>
+          </Link>
         </RowGroup>
       </TodoTemplateBlock>
-      <Footer />
     </>
   );
 }

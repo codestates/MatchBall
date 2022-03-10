@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Footer from "../components/Footer";
-import Nav from "../components/Nav";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Section = styled.section`
   position: relative;
@@ -81,23 +81,42 @@ const Box = styled.button`
   }
 `;
 
-function MyPage() {
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  & + & {
+    margin-top: 20px;
+  }
+`;
+
+const Div = styled.div`
+  margin-top: 20px;
+`;
+
+function MyPage({ handleLogout, getMyText }) {
   return (
     <>
-      <Nav />
       <Section>
         <Inner>
           <Subject>마이페이지</Subject>
           <TemplateBlock>
-            <Box>회원정보수정</Box>
-            <Box>신청내역</Box>
-            <Box>작성한 글 </Box>
-            <Box>로그아웃 </Box>
-            <Box>회원탈퇴 </Box>
+            <StyledLink to="/mypage/edit">
+              <Box>회원정보수정</Box>
+            </StyledLink>
+            <StyledLink to="/mypage/orders">
+              <Box>신청내역</Box>
+            </StyledLink>
+            <StyledLink to="/mypage/matches">
+              <Box onClick={getMyText}>작성한 글</Box>
+            </StyledLink>
+            <Div>
+              <Box onClick={handleLogout}>로그아웃</Box>
+            </Div>
+            <Div>
+              <Box>회원탈퇴</Box>
+            </Div>
           </TemplateBlock>
         </Inner>
       </Section>
-      <Footer />
     </>
   );
 }
