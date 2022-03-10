@@ -59,12 +59,29 @@ const DateBtn = styled.button`
   & + & {
     margin-left: 75%;
   }
+  /* border-radius: 30px; */
+  cursor: grab;
+`;
+
+const WriteBtn = styled.button`
+  display: block;
+  background-color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  width: 72px;
+  height: 40px;
+  position: absolute;
+  top: -20%;
+  left: 90%;
+  color: #000;
+  margin-top: 80px;
+  font-size: 15px;
 
   /* border-radius: 30px; */
   cursor: grab;
 `;
 
-function Matches({ data }) {
+function Matches({ data, viewDetailText }) {
   const [dialog, setDialog] = useState(false);
   const onClick = () => {
     setDialog(true);
@@ -85,12 +102,20 @@ function Matches({ data }) {
         <MatchesBlock>
           <RegionForm />
           <DateBtn onClick={onClick}>전체기간</DateBtn>
-          <DateBtn>글쓰기</DateBtn>
-          {/* <div className="entire-matches">
+          <Link to="/matches/new">
+            <WriteBtn>글쓰기</WriteBtn>
+          </Link>
+          <div className="entire-matches">
             {data.map((match) => {
-              return <MatchInfo key={match.id} match={match} />;
+              return (
+                <MatchInfo
+                  onClick={() => viewDetailText(match.id)}
+                  key={match.id}
+                  match={match}
+                />
+              );
             })}
-          </div> */}
+          </div>
           <CalendarModal
             onConfirm={onConfirm}
             onCancel={onCancel}

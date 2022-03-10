@@ -114,7 +114,8 @@ function LoginPage({
             setErrorMessage("계정 정보가 일치하지 않습니다.");
             return false;
           } else {
-            setUserAccessToken(res.data.data.accessToken);
+            // setUserAccessToken(res.data.data.accessToken);
+            localStorage.setItem("accessToken", res.data.data.accessToken);
             axios
               .post(
                 `${process.env.REACT_APP_API_URL}/users/auth`,
@@ -132,11 +133,7 @@ function LoginPage({
                   );
                   return false;
                 } else {
-                  setUserInfo(res.data.data);
-                  localStorage.setItem(
-                    "nickname",
-                    res.data.data.userInfo.nickname
-                  );
+                  setUserInfo(res.data.data.userInfo);
                 }
               });
           }

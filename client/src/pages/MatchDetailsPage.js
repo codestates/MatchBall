@@ -1,7 +1,5 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import Footer from "../components/Footer";
-import Nav from "../components/Nav";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -33,7 +31,7 @@ const Subject = styled.div`
 
 const MatchesBlock = styled.div`
   width: 900px;
-  min-height: 100%;
+  height: 712px;
 
   position: relative; /* 추후 박스 하단에 추가 버튼을 위치시키기 위한 설정 */
   background: white;
@@ -125,7 +123,6 @@ const ClickBtn = styled.button`
 function MatchDetailsPage(props) {
   return (
     <>
-      <Nav />
       <Section>
         <Subject>신청내역</Subject>
         <GlobalStyle />
@@ -231,7 +228,6 @@ function MatchDetailsPage(props) {
           </MatchesBlock>
         </Inner>
       </Section>
-      <Footer />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import Footer from "../components/Footer";
-import Nav from "../components/Nav";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -33,7 +33,7 @@ const Subject = styled.div`
 
 const MatchesBlock = styled.div`
   width: 900px;
-  min-height: 100%;
+  height: 712px;
 
   position: relative; /* 추후 박스 하단에 추가 버튼을 위치시키기 위한 설정 */
   background: white;
@@ -145,120 +145,41 @@ const DelBtn = styled.button`
   }
 `;
 
-function RegisterDetailsPage(props) {
+function RegisterDetailsPage({ myTextData }) {
   return (
     <>
-      <Nav />
       <Section>
         <Subject>작성내역</Subject>
         <GlobalStyle />
-
         <Inner>
           <MatchesBlock>
-            <Box>
-              <Region>용산</Region>
-              <FlexBox>
-                <Block>
-                  <Span>22.03.08</Span>
-                  <Span>13:30</Span>
-                </Block>
-                <Block>
-                  <Span>용산공원</Span>
-                  <Span>초급자</Span>
-                </Block>
-                <Block>
-                  <Span>KIA 타이거즈</Span>
-                </Block>
-                <RiBlock>
-                  <EditBtn>수정</EditBtn>
-                  <DelBtn>취소</DelBtn>
-                </RiBlock>
-              </FlexBox>
-            </Box>
-            <Box>
-              <Region>용산</Region>
-              <FlexBox>
-                <Block>
-                  <Span>22.03.08</Span>
-                  <Span>13:30</Span>
-                </Block>
-                <Block>
-                  <Span>용산공원</Span>
-                  <Span>초급자</Span>
-                </Block>
-                <Block>
-                  <Span>KIA 타이거즈</Span>
-                </Block>
-                <RiBlock>
-                  <EditBtn>수정</EditBtn>
-                  <DelBtn>취소</DelBtn>
-                </RiBlock>
-              </FlexBox>
-            </Box>
-            <Box>
-              <Region>용산</Region>
-              <FlexBox>
-                <Block>
-                  <Span>22.03.08</Span>
-                  <Span>13:30</Span>
-                </Block>
-                <Block>
-                  <Span>용산공원</Span>
-                  <Span>초급자</Span>
-                </Block>
-                <Block>
-                  <Span>KIA 타이거즈</Span>
-                </Block>
-                <RiBlock>
-                  <EditBtn>수정</EditBtn>
-                  <DelBtn>취소</DelBtn>
-                </RiBlock>
-              </FlexBox>
-            </Box>
-            <Box>
-              <Region>용산</Region>
-              <FlexBox>
-                <Block>
-                  <Span>22.03.08</Span>
-                  <Span>13:30</Span>
-                </Block>
-                <Block>
-                  <Span>용산공원</Span>
-                  <Span>초급자</Span>
-                </Block>
-                <Block>
-                  <Span>KIA 타이거즈</Span>
-                </Block>
-                <RiBlock>
-                  <EditBtn>수정</EditBtn>
-                  <DelBtn>취소</DelBtn>
-                </RiBlock>
-              </FlexBox>
-            </Box>
-            <Box>
-              <Region>용산</Region>
-              <FlexBox>
-                <Block>
-                  <Span>22.03.08</Span>
-                  <Span>13:30</Span>
-                </Block>
-                <Block>
-                  <Span>용산공원</Span>
-                  <Span>초급자</Span>
-                </Block>
-                <Block>
-                  <Span>KIA 타이거즈</Span>
-                </Block>
-                <RiBlock>
-                  <EditBtn>수정</EditBtn>
-                  <DelBtn>취소</DelBtn>
-                </RiBlock>
-              </FlexBox>
-            </Box>
+            {myTextData.map((match) => {
+              return (
+                <Box>
+                  <Region>{match.region}</Region>
+                  <FlexBox>
+                    <Block>
+                      <Span>{match.matchdate.slice(0, 10)}</Span>
+                      <Span>{match.matchdate.slice(11, 16)}</Span>
+                    </Block>
+                    <Block>
+                      <Span>{match.sitename}</Span>
+                      <Span>{match.user.level}</Span>
+                    </Block>
+                    <Block>
+                      <Span>{match.user.team}</Span>
+                    </Block>
+                    <RiBlock>
+                      <EditBtn>수정</EditBtn>
+                      <DelBtn>취소</DelBtn>
+                    </RiBlock>
+                  </FlexBox>
+                </Box>
+              );
+            })}
           </MatchesBlock>
         </Inner>
       </Section>
-      <Footer />
     </>
   );
 }
