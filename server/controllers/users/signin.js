@@ -16,7 +16,7 @@ module.exports = (req, res) => {
             delete data.dataValues.pw
 
             const accessToken = generateAccessToken(data.dataValues)
-            console.log(accessToken)
+
             res.cookie("accessToken", accessToken, {
                 httpOnly: true,
             })
