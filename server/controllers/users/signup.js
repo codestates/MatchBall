@@ -1,42 +1,34 @@
 const { users } = require('../../models')
-const { generateAccessToken } = require('../tokenFunctions');
 
-module.exports = (req, res) => {
-    // email: DataTypes.STRING,
-    // pw: DataTypes.STRING,
-    // mobile: DataTypes.INTEGER,
-    // nickname: DataTypes.STRING,
-    // level: DataTypes.STRING,
-    // team: DataTypes.STRING
+module.exports = async (req, res) => {
+
     const { email, password, mobile, nickname, level, team } = req.body
-
-    if (!email, password, mobile, nickname, level, team) {
+    if (!email  ||!password  ||!mobile  ||!nickname  ||!level ||!team) {
         return res.status(422).send({ message: "회원가입 실패" })
     }
+    try {
+        const userData1 = await users.findOne({ where: { email } })
+        const userData2 = await users.findOne({ where: { mobile } })
+        const userData3 = await users.findOne({ where: { nickname } })
 
-    users.findOrCreate({
-        where: {
-            email,
-            pw: password,
-            mobile,
-            nickname,
-            level,
-            team
+        if (!userData1 && !userData2 && !userData3) {
+            users.create({
+                email,
+                pw: password,
+                mobile,
+                nickname,
+                level,
+                team
+            })
+
+            res.status(200).json({ message: "ok" })
+        } else {
+            return res.status(409).json({ message: "email exists" })
         }
-    })
-        .then(([result, created]) => {
-            if (!created) {
-                return res.status({ message: "email exists" })
-            } else {
-                delete result.dataValues.pw
-                const accessToken = generateAccessToken(result.dataValues)
-
-                res.cookie("accessToken", accessToken, {
-                    httpOnly: true
-                })
-
-                res.status(200).json({ message: "ok" })
-            }
+    } catch (err) {
+        res.status(500).json({
+            "code": 500,
+            "error": "server error"
         })
-
+    }
 }

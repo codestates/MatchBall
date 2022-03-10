@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     region: DataTypes.STRING,
     region_Detail: DataTypes.STRING,
     sitename: DataTypes.STRING,
+    user_id: DataTypes.INTEGER,
     matchdate: DataTypes.DATE,
     is_matched: DataTypes.BOOLEAN
   }, {

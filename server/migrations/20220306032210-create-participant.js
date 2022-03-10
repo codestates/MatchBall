@@ -1,33 +1,18 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('matches', {
+    await queryInterface.createTable('participants', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      message: {
-        type: Sequelize.STRING
-      },
-      region: {
-        type: Sequelize.STRING
-      },
-      region_Detail: {
-        type: Sequelize.STRING
-      },
-      sitename: {
-        type: Sequelize.STRING
-      },
-      user_id: {
+      order_user_id: {
         type: Sequelize.INTEGER
       },
-      matchdate: {
-        type: Sequelize.DATE
-      },
-      is_matched: {
-        type: Sequelize.BOOLEAN
+      match_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('matches');
+    await queryInterface.dropTable('participants');
   }
 };
