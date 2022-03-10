@@ -1,21 +1,21 @@
 import "./App.css";
 import Matches from "./pages/Matches";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import UserInfoEditPage from "./pages/UserInfoEditPage";
-import MyPage from "./pages/MyPage";
 import RegisterPage from "./pages/RegisterPage";
-import Contents from "./components/Contents";
+import MyPage from "./pages/MyPage";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [matchData, setMatchData] = useState([]);
   const [userAccessToken, setUserAccessToken] = useState("");
-  // const history = useHistory();
+  const [userInfo, setUserInfo] = useState("");
 
   const isAuthenticated = () => {
     axios
@@ -23,9 +23,9 @@ function App() {
         cookie: userAccessToken,
       })
       .then((res) => {
-        setMatchData(res.data);
-        setIsLogin(true);
-        // history.push("/matches");
+        setMatchData(res.data.matchesdata);
+        // localStorage.setItem("matchData", JSON.stringify(res.data));
+        localStorage.setItem("isLogin", true);
       });
   };
 
@@ -36,7 +36,6 @@ function App() {
   const handleLogout = () => {
     axios.post(`${process.env.REACT_APP_API_URL}/users/signout`).then((res) => {
       setIsLogin(false);
-      // history.push("/signin");
     });
   };
 
@@ -44,37 +43,53 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <LandingPage />
-        </Route>
-
-        <Route path="/signin">
-          <LoginPage
-            title="로그인"
-            handleResponseSuccess={handleResponseSuccess}
-            setUserAccessToken={setUserAccessToken}
-          />
-        </Route>
-
-        <Route path="/signup">
-          <SignUpPage />
-        </Route>
-
-        <Route path="/mypage">
-          {isLogin ? (
-            // <MyPage handleLogout={handleLogout} />
-            <Redirect to="/" />
+          {/* <LandingPage /> */}
+          {localStorage.getItem("isLogin") ? (
+            <Redirect to="/matches" />
           ) : (
-            <Redirect to="/signin" />
+            <LandingPage />
           )}
         </Route>
 
-        <Route path="/matches/new">
-          <RegisterPage />
-        </Route>
+        <>
+          <Nav />
 
-        <Route path="/matches">
-          <Matches data={matchData} />
-        </Route>
+          <Route path="/signin">
+            <LoginPage
+              title="로그인"
+              handleResponseSuccess={handleResponseSuccess}
+              setUserAccessToken={setUserAccessToken}
+              setUserInfo={setUserInfo}
+            />
+            {localStorage.getItem("isLogin") ? (
+              <Redirect to="/matches" />
+            ) : (
+              <Redirect to="/signin" />
+            )}
+          </Route>
+
+          <Route path="/signup">
+            <SignUpPage />
+          </Route>
+
+          <Route path="/mypage">
+            {localStorage.getItem("isLogin") ? (
+              <MyPage handleLogout={handleLogout} />
+            ) : (
+              <Redirect to="/signin" />
+            )}
+          </Route>
+
+          <Route path="/matches/new">
+            <RegisterPage />
+          </Route>
+
+          <Route path="/matches">
+            <Matches data={matchData} />
+          </Route>
+
+          <Footer />
+        </>
       </Switch>
     </BrowserRouter>
   );
