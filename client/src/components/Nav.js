@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import logo from "../img/logo_size.jpg";
 import { MdAccountCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
 
 const Header = styled.header`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -61,7 +60,7 @@ const User = styled.a`
   }
 `;
 
-function Nav() {
+function Nav({ userInfo }) {
   return (
     <Header>
       <Inner>
@@ -71,7 +70,7 @@ function Nav() {
           </Logo>
         </MenuGroup>
         <SignGroup>
-          <UserName>권순일님</UserName>
+          <UserName>{userInfo.nickname}</UserName>
           <User href="/mypage">
             <MdAccountCircle size={50} color="#190707" />
           </User>

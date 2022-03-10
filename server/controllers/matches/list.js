@@ -1,6 +1,7 @@
 const { matches } = require('../../models')
 const { users } = require('../../models')
 
+
 module.exports = async (req, res) => {
   try {
     // const currentUser = await getCurrentUser(req.user.id);

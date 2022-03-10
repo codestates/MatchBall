@@ -155,11 +155,11 @@ function SignUpForm({ title }) {
   };
 
   const signInfoPost = () => {
-    // axios
-    //   .post(`${process.env.REACT_APP_API_URL}/users/signup`, signInfo)
-    //   .then((res) => {
-    //   });
-    console.log("hello");
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/users/signup`, signInfo)
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   const warning = () => {

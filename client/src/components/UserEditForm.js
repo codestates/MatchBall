@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useState } from "react";
+import axios from "axios";
+import UserInfoEditPage from "../pages/UserInfoEditPage";
 
 const Section = styled.section`
   position: relative;
@@ -108,11 +111,64 @@ const ClickBtn = styled.button`
   }
 `;
 
-function UserEditForm({ title, click, disabled }) {
+function UserEditForm({ disabled, userInfo, setUserInfo }) {
+  const [signInfo, setSignInfo] = useState({
+    password: "",
+    nickname: "",
+    mobile: "",
+    level: "",
+    team: "",
+    user_id: userInfo.id,
+  });
+
+  const [pwdCheckText, setPwdCheckText] = useState("");
+  const [pwdCheckConfirmText, setPwdCheckConfirmText] = useState("");
+
+  const handleInputValue = (key) => (e) => {
+    setSignInfo({ ...signInfo, [key]: e.target.value });
+  };
+
+  const checkPassword = (e) => {
+    let pwd = e.target.value;
+
+    if (pwd.length < 8 || pwd.length > 12) {
+      setPwdCheckText("비밀번호를 8~12자 사이로 입력하세요.");
+      return false;
+    } else {
+      setPwdCheckText("사용이 가능합니다.");
+    }
+    setSignInfo({ ...signInfo, password: pwd });
+  };
+
+  const isSamePwd = (e) => {
+    if (signInfo.password !== "") {
+      if (signInfo.password !== e.target.value) {
+        setPwdCheckConfirmText("비밀번호가 서로 일치하지 않습니다.");
+        return false;
+      }
+      setPwdCheckConfirmText("서로 일치합니다.");
+    }
+  };
+
+  const signInfoPost = () => {
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/mypage/edit`, signInfo)
+      .then((res) => {
+        alert(JSON.stringify(res.data.message));
+        setUserInfo({
+          ...userInfo,
+          level: signInfo.level,
+          mobile: signInfo.mobile,
+          nickname: signInfo.nickname,
+          team: signInfo.team,
+        });
+      });
+  };
+
   return (
     <Section>
       <Inner>
-        <Subject>{title}</Subject>
+        <Subject>회원 정보 수정</Subject>
         <TodoTemplateBlock>
           <RowGroup>
             <Title>이메일</Title>
@@ -123,7 +179,7 @@ function UserEditForm({ title, click, disabled }) {
                 title="email"
                 maxlength="30"
                 class="int"
-                placeholder="이메일"
+                value={userInfo.email}
                 disabled
               ></Box>
             ) : (
@@ -144,7 +200,9 @@ function UserEditForm({ title, click, disabled }) {
               maxlength="20"
               class="int"
               placeholder="비밀번호"
+              onChange={checkPassword}
             ></Box>
+            <div>{pwdCheckText}</div>
             <Title>비밀번호 확인</Title>
             <Box
               type="password"
@@ -153,7 +211,9 @@ function UserEditForm({ title, click, disabled }) {
               maxlength="20"
               class="int"
               placeholder="비밀번호확인"
+              onChange={isSamePwd}
             ></Box>
+            <div>{pwdCheckConfirmText}</div>
             <Title>닉네임</Title>
             <Box
               type="text"
@@ -162,6 +222,7 @@ function UserEditForm({ title, click, disabled }) {
               maxlength="10"
               class="int"
               placeholder="닉네임"
+              onChange={handleInputValue("nickname")}
             ></Box>
             <Title>mobile</Title>
             <Box
@@ -171,9 +232,10 @@ function UserEditForm({ title, click, disabled }) {
               maxlength="10"
               class="int"
               placeholder="전화번호"
+              onChange={handleInputValue("mobile")}
             ></Box>
             <Title>본인실력</Title>
-            <Select>
+            <Select onChange={handleInputValue("level")}>
               <OptGroup label="실력정도">
                 <Opt defaultValue="---선택하세요---">---선택하세요---</Opt>
                 <Opt>고급자</Opt>
@@ -183,7 +245,7 @@ function UserEditForm({ title, click, disabled }) {
               </OptGroup>
             </Select>
             <Title>좋아하는 팀</Title>
-            <Select>
+            <Select onChange={handleInputValue("team")}>
               <OptGroup label="프로야구 팀">
                 <Opt selected="true">없음</Opt>
                 <Opt>KIA 타이거즈</Opt>
@@ -199,7 +261,7 @@ function UserEditForm({ title, click, disabled }) {
               </OptGroup>
             </Select>
             <Link to="/signin">
-              <ClickBtn>{click}</ClickBtn>
+              <ClickBtn onClick={signInfoPost}>수정하기</ClickBtn>
             </Link>
           </RowGroup>
         </TodoTemplateBlock>
